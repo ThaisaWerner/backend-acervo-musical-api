@@ -54,7 +54,7 @@ public class SpringDataConfig {
         //Diz para o JPA usar o Hibernete(mapeia classes Java em tabelas no banco) para fazer alterações no BD
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         //Permite que o hibernate gere automaticamente as tabelas com base nas entidades
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(false);
         //desativa a exibição dos comandos SQL no console (poderia ser true para debug).
         vendorAdapter.setShowSql(false);
 

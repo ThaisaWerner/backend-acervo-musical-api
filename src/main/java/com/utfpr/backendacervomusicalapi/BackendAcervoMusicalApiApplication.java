@@ -28,13 +28,13 @@ public class BackendAcervoMusicalApiApplication {
 			log.info("");
 			log.info("");
 			log.info("============ Listagem de todas as MUSICAS");
-			for(Musica m : musicaService.listarTodasMusicas())
+			for(Musica m : musicaService.listar())
 				log.info(m.toString());
 
 			log.info("");
 			log.info("");
 			log.info("============ Listagem de todas as CATEGORIAS");
-			for(Categoria c : categoriaService.listarTodasCategorias())
+			for(Categoria c : categoriaService.listar())
 				log.info(c.toString());
 
 		};
