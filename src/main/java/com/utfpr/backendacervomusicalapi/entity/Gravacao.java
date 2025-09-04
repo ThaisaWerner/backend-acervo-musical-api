@@ -2,6 +2,7 @@ package com.utfpr.backendacervomusicalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class Gravacao {
     @JoinColumn(name = "cod_musica", nullable = false)
     private Musica musica;
 
+    @DateTimeFormat
     @Column(name = "data_gravacao")
     private Date dataGravacao;
 }

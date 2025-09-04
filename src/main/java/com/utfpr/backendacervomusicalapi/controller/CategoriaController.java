@@ -5,10 +5,7 @@ import com.utfpr.backendacervomusicalapi.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +32,21 @@ public class CategoriaController {
         Optional<Categoria> categoriaFound = categoriaService.encontrar(id);
         return categoriaFound.map(categoria -> new ResponseEntity<>(categoria, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Categoria> update(@PathVariable(value="id") Long id, @RequestBody Categoria categoriaUpdated) {
+        Optional<Categoria> categoriaOld = categoriaService.encontrar(id);
+
+        if (categoriaOld.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            categoriaUpdated.setId(categoriaOld.get().getId());
+            if (categoriaService.salvar(categoriaUpdated) != null) {
+                return new ResponseEntity<>(categoriaUpdated, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 }

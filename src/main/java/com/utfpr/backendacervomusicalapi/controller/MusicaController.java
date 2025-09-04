@@ -5,10 +5,7 @@ import com.utfpr.backendacervomusicalapi.service.MusicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +32,21 @@ public class MusicaController {
         Optional<Musica> musicaFound = musicaService.encontrar(id);
         return musicaFound.map(musica -> new ResponseEntity<>(musica, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Musica> update(@PathVariable(value="id") Long id, @RequestBody Musica musicaUpdated) {
+        Optional<Musica> musicaOld = musicaService.encontrar(id);
+
+        if (musicaOld.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            musicaUpdated.setId(musicaOld.get().getId());
+            if (musicaService.salvar(musicaUpdated) != null) {
+                return new ResponseEntity<>(musicaUpdated, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 }

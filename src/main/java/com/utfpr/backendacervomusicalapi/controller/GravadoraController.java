@@ -5,10 +5,7 @@ import com.utfpr.backendacervomusicalapi.service.GravadoraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +32,21 @@ public class GravadoraController {
         Optional<Gravadora> gravadoraFound = gravadoraService.encontrar(id);
         return gravadoraFound.map(gravadora -> new ResponseEntity<>(gravadora, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Gravadora> update(@PathVariable(value="id") Long id, @RequestBody Gravadora gravadoraUpdated) {
+        Optional<Gravadora> gravadoraOld = gravadoraService.encontrar(id);
+
+        if (gravadoraOld.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            gravadoraUpdated.setId(gravadoraOld.get().getId());
+            if (gravadoraService.salvar(gravadoraUpdated) != null) {
+                return new ResponseEntity<>(gravadoraUpdated, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 }
