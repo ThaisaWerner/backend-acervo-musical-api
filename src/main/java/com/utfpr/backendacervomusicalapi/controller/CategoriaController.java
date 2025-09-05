@@ -49,4 +49,15 @@ public class CategoriaController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Categoria> create(@RequestBody Categoria categoria) {
+        Categoria categoriaCreated = categoriaService.salvar(categoria);
+
+        if (categoriaCreated != null) {
+            return new ResponseEntity<>(categoriaCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

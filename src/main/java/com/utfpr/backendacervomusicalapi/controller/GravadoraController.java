@@ -49,4 +49,15 @@ public class GravadoraController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Gravadora> create(@RequestBody Gravadora gravadora) {
+        Gravadora gravadoraCreated = gravadoraService.salvar(gravadora);
+
+        if (gravadoraCreated != null) {
+            return new ResponseEntity<>(gravadoraCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

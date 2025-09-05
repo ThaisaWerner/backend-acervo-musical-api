@@ -49,4 +49,15 @@ public class MusicaController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Musica> create(@RequestBody Musica musica) {
+        Musica musicaCreated = musicaService.salvar(musica);
+
+        if (musicaCreated != null) {
+            return new ResponseEntity<>(musicaCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

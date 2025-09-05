@@ -49,4 +49,15 @@ public class CantorController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Cantor> create(@RequestBody Cantor cantor) {
+        Cantor cantorCreated = cantorService.salvar(cantor);
+
+        if (cantorCreated != null) {
+            return new ResponseEntity<>(cantorCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

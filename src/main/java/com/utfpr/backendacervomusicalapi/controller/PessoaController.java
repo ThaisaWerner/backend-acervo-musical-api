@@ -49,4 +49,15 @@ public class PessoaController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Pessoa> create(@RequestBody Pessoa pessoa) {
+        Pessoa pessoaCreated = pessoaService.salvar(pessoa);
+
+        if (pessoaCreated != null) {
+            return new ResponseEntity<>(pessoaCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

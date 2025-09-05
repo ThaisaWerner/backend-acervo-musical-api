@@ -50,4 +50,15 @@ public class FoneController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Fone> create(@RequestBody Fone fone) {
+        Fone foneCreated = foneService.salvar(fone);
+
+        if (foneCreated != null) {
+            return new ResponseEntity<>(foneCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

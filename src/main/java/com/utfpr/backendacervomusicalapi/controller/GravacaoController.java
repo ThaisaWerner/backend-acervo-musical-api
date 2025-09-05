@@ -49,4 +49,15 @@ public class GravacaoController {
             }
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Gravacao> create(@RequestBody Gravacao gravacao) {
+        Gravacao gravacaoCreated = gravacaoService.salvar(gravacao);
+
+        if (gravacaoCreated != null) {
+            return new ResponseEntity<>(gravacaoCreated, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
